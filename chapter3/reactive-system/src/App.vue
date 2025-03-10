@@ -1,20 +1,28 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref } from "vue";
+
+const now = new Date();
+const nowStr = now.toLocaleTimeString();
+
+let timeStr = nowStr;
+
+const timeStrRef = ref(nowStr);
+
+function changeTime() {
+  const newTime = new Date();
+  const newTimeStr = newTime.toLocaleTimeString();
+  timeStr = newTimeStr;
+  timeStrRef.value = newTimeStr;
+}
+
+setInterval(changeTime, 1000);
+
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <p>현재 시각 : {{ timeStr }} </p>
+  <p>현재 시각(ref) : {{ timeStrRef }}</p>
 </template>
 
 <style scoped>
