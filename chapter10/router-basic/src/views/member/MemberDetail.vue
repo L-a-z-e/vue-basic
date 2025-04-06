@@ -1,19 +1,30 @@
 <script setup lang="ts">
-import { inject, computed } from "vue";
-import { RouterLink} from "vue-router";
+import { inject, computed, ref } from "vue";
+import {onBeforeRouteUpdate, RouterLink, useRoute} from "vue-router";
 import type { Member } from "@/interface";
 
 interface Props {
   id: number;
 }
 
+const route = useRoute();
+
 const props = defineProps<Props>();
 const memberList = inject("memberList") as Map<number, Member>;
-const member = computed(
-    (): Member => {
-      return memberList.get(props.id) as Member;
+// const member = computed(
+//     (): Member => {
+//       return memberList.get(props.id) as Member;
+//     }
+// );
+
+let id = Number(route.params.id);
+const member = ref(memberList.get(id) as Member);
+onBeforeRouteUpdate(
+    (to, from) => {
+      id = Number(to.params.id);
+      member.value = memberList.get(id) as Member;
     }
-);
+)
 
 const localNote = computed(
     (): string => {

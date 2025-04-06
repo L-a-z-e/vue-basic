@@ -20,6 +20,9 @@ const memberList = inject("memberList") as Map<number, Member>;
   </nav>
   <section>
     <h2>회원 리스트</h2>
+    <p>
+      신규 <router-link :to="{ name: 'MemberAdd'}">등록</router-link>
+    </p>
       <ul>
         <li v-for="[id, member] in memberList" :key="id">
           <RouterLink :to="{ name: 'MemberDetail', params: { id: id}}">
@@ -28,6 +31,7 @@ const memberList = inject("memberList") as Map<number, Member>;
         </li>
       </ul>
   </section>
+  <RouterView/>
 </template>
 
 <style scoped>
