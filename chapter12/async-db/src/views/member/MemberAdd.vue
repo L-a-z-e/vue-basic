@@ -18,8 +18,19 @@ const member: Member = reactive(
 );
 
 const onAdd = (): void => {
-  memberStore.insertMember(member);
-  router.push({ name: "MemberList"});
+  const promise = memberStore.insertMember(member);
+  promise.then(
+      (result: boolean) => {
+        if (result) {
+          router.push({ name: "MemberList" });
+        }
+      }
+  );
+  promise.catch(
+      (error) => {
+        console.log("데이터 등록 실패", error);
+      }
+  )
 }
 </script>
 
